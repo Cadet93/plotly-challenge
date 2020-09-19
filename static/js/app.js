@@ -23,13 +23,6 @@ function optionChanged() {
 
     console.log(person_id)
 
-    //d3.json("../data/samples.json").then((person_id) => {
-    //    console.log(value);
-    //value.
-
-    //build plots for person id
-    //buildPlots(person_id);
-
     d3.json("../data/samples.json").then((data) => {
 
         //grab selected person's metadata for demographic info section of the dashboard
@@ -47,11 +40,13 @@ function optionChanged() {
         var sample_values = sample.sample_values;
         var otu_ids = sample.otu_ids;
         var otu_labels = sample.otu_labels;
+        var washing_frequency = parseInt(persondata.wfreq);
 
         //console log data to ensure correct values were pulled
         console.log(sample_values);
         console.log(otu_ids);
         console.log(otu_labels);
+        console.log(washing_frequency);
 
         //slice top 10 sample data and assign to variables
         var top_sample_values = sample.sample_values.slice(0, 10);
@@ -67,6 +62,7 @@ function optionChanged() {
 
         console.log(sample);
 
+        //bar graph trace
         var trace1 = {
             x: top_sample_values.reverse(),
             y: yticks,
@@ -93,6 +89,31 @@ function optionChanged() {
         //render 10 ten sample bar plot
         Plotly.newPlot("bar", data, layout);
 
+
+        //Gauge trace
+        var gaugedata = [
+            {
+                domain: { x: [0, 1], y: [0, 1] },
+                value: washing_frequency,
+                title: { text: "Belly Button Washing Frequency" },
+                type: "indicator",
+                mode: "gauge+number"
+            }
+        ];
+
+        //set the data
+        //var data = [trace3];
+
+        //gauge plot
+        var layout = {
+            width: 600,
+            height: 500,
+            margin: { t: 0, b: 0 }
+        };
+
+        Plotly.newPlot('gauge', gaugedata, layout);
+
+        //bubble plot trace
         var trace2 = {
             x: otu_ids,
             y: sample_values,
@@ -101,48 +122,26 @@ function optionChanged() {
             marker: {
                 color: otu_ids,
                 size: sample_values,
+                colorscale: 'Greens'
             }
         };
 
+        //set the data
         var data = [trace2];
 
+        //layout for bubble plot
         var layout = {
             title: 'Marker Size',
             showlegend: false,
             height: 800,
-            width: 1200
+            width: 1200,
+
         };
 
         Plotly.newPlot('bubble', data, layout);
-
-
-
+        
     });
 
-
 }
-
-//function buildPlots(person_id) {
-
-//    d3.json("../data/samples.json").then(function (incomingdata) {
-
-//       console.log(incomingdata);
-
-//Grab values from response json object to build the plots
-//var sample_values = data.dataset.sample_values;
-//var otu_ids = data.dataset.otu_ids;
-//var otu_labels = data.dataset.otu_labels;
-
-//console.log(sample_values);
-
-//bar plot
-//var trace1 = {
-//   type: "bar",
-
-
-
-//   });
-//}
-
 
 init();
