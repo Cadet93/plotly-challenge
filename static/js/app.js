@@ -23,7 +23,7 @@ function optionChanged() {
 
     console.log(person_id)
 
-    d3.json("../data/samples.json").then((data) => {
+    d3.json(".../data/samples.json").then((data) => {
 
         //grab selected person's metadata for demographic info section of the dashboard
         var persondata = data.metadata.filter((sample) => sample.id === parseInt(person_id))[0];
