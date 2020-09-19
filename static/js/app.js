@@ -1,6 +1,6 @@
 // Populate the samples drop down when the dashboard loads
 function init() {
-    d3.json(".../data/samples.json").then((data) => {
+    d3.json("samples.json").then((data) => {
         var dropDown = d3.select('#selDataset');
         console.log(data);
         data.names.forEach((name) => {
@@ -23,7 +23,7 @@ function optionChanged() {
 
     console.log(person_id)
 
-    d3.json(".../data/samples.json").then((data) => {
+    d3.json("samples.json").then((data) => {
 
         //grab selected person's metadata for demographic info section of the dashboard
         var persondata = data.metadata.filter((sample) => sample.id === parseInt(person_id))[0];
