@@ -1,6 +1,6 @@
 // Populate the samples drop down when the dashboard loads
 function init() {
-    d3.json("../data/samples.json").then((data) => {
+    d3.json(".../data/samples.json").then((data) => {
         var dropDown = d3.select('#selDataset');
         console.log(data);
         data.names.forEach((name) => {
